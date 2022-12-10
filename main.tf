@@ -227,7 +227,7 @@ resource "aws_instance" "kubernetes_controller" {
   security_groups             = [aws_security_group.controller_SG.id]
   subnet_id                   = aws_subnet.helm_subnet.id
   associate_public_ip_address = true
-  user_data                   = file("./kubecluster.sh")
+  user_data                   = file("./controller.sh")
   depends_on = [
     aws_key_pair.demo-key
   ]
@@ -247,7 +247,7 @@ resource "aws_instance" "kubernetes_workers" {
   subnet_id                   = aws_subnet.helm_subnet.id
   associate_public_ip_address = true
   for_each                    = toset(["k8s-worker1", "k8s-worker2"])
-  user_data                   = file("./kubecluster.sh")
+  user_data                   = file("./worker.sh")
   depends_on = [
     aws_key_pair.demo-key
   ]
