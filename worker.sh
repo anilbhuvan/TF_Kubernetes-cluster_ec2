@@ -18,6 +18,8 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 
+touch /home/ubuntu/"configured-10%"
+
 # installing go lang
 sudo apt-get update -y
 sudo snap install go --classic
@@ -46,6 +48,9 @@ sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 touch /docker_update
 
+rm -rf /home/ubuntu/"configured-10%"
+touch /home/ubuntu/"configured-35%"
+
 # install and configure CRIls
 cd /home/ubuntu
 git clone https://github.com/Mirantis/cri-dockerd.git
@@ -64,6 +69,10 @@ systemctl enable --now cri-docker.socket
 EOF
 cd /home/ubuntu
 sudo bash script.sh
+
+rm -rf /home/ubuntu/"configured-35%"
+touch /home/ubuntu/"configured-75%"
+
 # Installing kubeadm, kubelet and kubectl
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -76,4 +85,5 @@ sudo systemctl restart kubelet
 sudo systemctl daemon-reload
 touch /kubeadm_update
 
-
+rm -rf /home/ubuntu/"configured-75%"
+touch /home/ubuntu/"configured-100%"

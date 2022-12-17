@@ -1,35 +1,49 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-east-1"
+}
+
 # create a vpc
-resource "aws_vpc" "helm_vpc" {
+resource "aws_vpc" "k8s_vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
 
   tags = {
-    Name = "helm_vpc"
+    Name = "k8s_vpc"
   }
 }
 
 # create a subnet
-resource "aws_subnet" "helm_subnet" {
-  vpc_id            = aws_vpc.helm_vpc.id
+resource "aws_subnet" "k8s_subnet" {
+  vpc_id            = aws_vpc.k8s_vpc.id
   availability_zone = "us-east-1a"
   cidr_block        = "10.0.1.0/24"
   tags = {
-    Name = "helm_vpc"
+    Name = "k8s-subnet"
   }
 }
 
 # Create a Internet_Gateway
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.helm_vpc.id
+  vpc_id = aws_vpc.k8s_vpc.id
 
   tags = {
-    Name = "Helm-gw"
+    Name = "k8s-gw"
   }
 }
 
 # Create a Route_table
 resource "aws_route_table" "rt" {
-  vpc_id = aws_vpc.helm_vpc.id
+  vpc_id = aws_vpc.k8s_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -44,7 +58,7 @@ resource "aws_route_table" "rt" {
 
 # Associate subnet with route table
 resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.helm_subnet.id
+  subnet_id      = aws_subnet.k8s_subnet.id
   route_table_id = aws_route_table.rt.id
 }
 
@@ -52,7 +66,7 @@ resource "aws_route_table_association" "a" {
 resource "aws_security_group" "controller_SG" {
   name        = "Controller_SG"
   description = "Allow inbound traffic for kubernetes controller"
-  vpc_id      = aws_vpc.helm_vpc.id
+  vpc_id      = aws_vpc.k8s_vpc.id
 
   ingress {
     description      = "TLS from VPC"
@@ -140,7 +154,7 @@ resource "aws_security_group" "controller_SG" {
 resource "aws_security_group" "worker_SG" {
   name        = "worker_SG"
   description = "Allow inbound traffic for kubernetes worker nodes"
-  vpc_id      = aws_vpc.helm_vpc.id
+  vpc_id      = aws_vpc.k8s_vpc.id
 
   ingress {
     description      = "TLS from VPC"
@@ -201,8 +215,8 @@ resource "aws_security_group" "worker_SG" {
 }
 
 # create aws key pair
-resource "aws_key_pair" "demo-key" {
-  key_name   = "helm-key"
+resource "aws_key_pair" "k8s-key" {
+  key_name   = "k8s-key"
   public_key = tls_private_key.rsa-4096-example.public_key_openssh
 }
 
@@ -215,7 +229,7 @@ resource "tls_private_key" "rsa-4096-example" {
 # save pem file to local host
 resource "local_file" "private-key" {
   content  = tls_private_key.rsa-4096-example.private_key_pem
-  filename = "helm-key.pem"
+  filename = "k8s-key.pem"
 }
 
 # creat a kubernetes controller
@@ -223,9 +237,9 @@ resource "aws_instance" "kubernetes_controller" {
   ami                         = "ami-08c40ec9ead489470"
   instance_type               = "t2.medium"
   availability_zone           = "us-east-1a"
-  key_name                    = "helm-key"
+  key_name                    = "k8s-key"
   security_groups             = [aws_security_group.controller_SG.id]
-  subnet_id                   = aws_subnet.helm_subnet.id
+  subnet_id                   = aws_subnet.k8s_subnet.id
   associate_public_ip_address = true
   user_data                   = file("./controller.sh")
   depends_on = [
@@ -242,9 +256,9 @@ resource "aws_instance" "kubernetes_workers" {
   ami                         = "ami-08c40ec9ead489470"
   instance_type               = "t2.medium"
   availability_zone           = "us-east-1a"
-  key_name                    = "helm-key"
+  key_name                    = "k8s-key"
   security_groups             = [aws_security_group.worker_SG.id]
-  subnet_id                   = aws_subnet.helm_subnet.id
+  subnet_id                   = aws_subnet.k8s_subnet.id
   associate_public_ip_address = true
   for_each                    = toset(["k8s-worker1", "k8s-worker2"])
   user_data                   = file("./worker.sh")
