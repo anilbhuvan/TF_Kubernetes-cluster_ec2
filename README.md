@@ -1,14 +1,14 @@
 # TF_Kubernetes-cluster_ec2
 Creating a 3 node Kubernetes cluster by provisioning EC2 instances with Terraform.
 
-Basic Steps to provision the infrastructure
-1. Install the AWS cli on your system 
+Steps to provision the infrastructure
+1. Install aws-cli on your system.
 > https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-2. Configure the AWS CLI credentials.
+2. Configure the AWS Credentials in aws-cli.
 ```aws configure```
-3. clone the Git Repository
+3. clone the Git Repository.
 ```git clone https://github.com/anilbhuvan/TF_Kubernetes-cluster_ec2.git```
-4. Launch the terminal and navigate to the local repository
+4. Launch the terminal and navigate to cloned git repository on your loacl system.
 5. ```terraform init```
 6. ```terraform apply -auto-approve```
 
