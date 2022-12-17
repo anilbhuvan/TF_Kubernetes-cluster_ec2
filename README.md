@@ -24,7 +24,7 @@ Applying this Terraform file will create one k8s-controller and two worker nodes
 7. login to AWS console
 8. SSH into K8s-Controller 
 
-SSH key should be downloaded in your local repository during terraform apply process. Wait untill the "congigured-100%" file apperes in /home/ubuntu.
+SSH key should be downloaded in your local repository during terraform apply process. Wait untill the "configured-100%" file apperes in /home/ubuntu.
 
 9. ```cat join_command.txt``` and copy the command.
 
