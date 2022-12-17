@@ -243,7 +243,7 @@ resource "aws_instance" "kubernetes_controller" {
   associate_public_ip_address = true
   user_data                   = file("./controller.sh")
   depends_on = [
-    aws_key_pair.demo-key
+    aws_key_pair.k8s-key
   ]
 
   tags = {
@@ -263,7 +263,7 @@ resource "aws_instance" "kubernetes_workers" {
   for_each                    = toset(["k8s-worker1", "k8s-worker2"])
   user_data                   = file("./worker.sh")
   depends_on = [
-    aws_key_pair.demo-key
+    aws_key_pair.k8s-key
   ]
   tags = {
     "Name" = each.key
