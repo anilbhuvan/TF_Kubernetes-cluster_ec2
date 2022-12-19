@@ -9,21 +9,7 @@ pipeline {
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
                 credentialsId: "${aws-sandbox}"]]) 
-                    {
-                    sh 'terraform init'
                 }
-            }
         }
-        stage('terraform init') {
-            steps {
-                sh 'terraform init'
-            }
-        }
-        stage('terraform apply') {
-            steps {
-                sh 'terraform apply -auto-approve'
-            }
-        }
-
     }
 }
