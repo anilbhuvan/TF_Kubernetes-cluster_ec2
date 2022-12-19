@@ -16,4 +16,5 @@ pipeline {
                 credentialsId: "${aws-sandbox}"]]) 
             }
         }
+    }
 }
