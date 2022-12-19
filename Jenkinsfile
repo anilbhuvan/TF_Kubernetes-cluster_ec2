@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('terraform init') {
+        stage('aws version') {
             steps {
-                sh 'terraform init'
+                sh 'aws --version'
             }
         }
         stage('AWS Credential Binding') {
