@@ -254,7 +254,7 @@ resource "aws_instance" "kubernetes_controller" {
 # creat a kubernetes worker nodes
 resource "aws_instance" "kubernetes_workers" {
   ami                         = "ami-08c40ec9ead489470"
-  instance_type               = "t2.medium"
+  instance_type               = "t3.medium"
   availability_zone           = "us-east-1a"
   key_name                    = "k8s-key"
   security_groups             = [aws_security_group.worker_SG.id]
