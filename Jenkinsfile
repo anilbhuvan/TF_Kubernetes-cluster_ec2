@@ -2,18 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('aws version') {
+        stage('Checkout SCM') {
             steps {
-                sh 'aws --version'
+                checkout scm
             }
         }
-        stage('AWS Credential Binding') {
+
+        stage('Install AWS CLI') {
             steps {
-                withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding', 
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                credentialsId: "${aws-sandbox}"]]) 
+                sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
+                sh 'unzip awscliv2.zip'
+                sh './aws/install'
+            }
+        }
+
+        stage('AWS Credential Binding') {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+                AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+            }
+            steps {
+                sh 'aws s3 ls'
             }
         }
     }
