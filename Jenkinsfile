@@ -55,15 +55,21 @@ pipeline {
 
 
         stage('Apply terraform infrastructure') {
-            environment {
-                AWS_ACCESS_KEY_ID = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
-                AWS_SECRET_ACCESS_KEY = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
-            }
-            steps {
-                sh 'terraform plan'
+        environment {
+            AWS_ACCESS_KEY_ID = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
+            AWS_SECRET_ACCESS_KEY = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
+        }
+        steps {
+            sh 'terraform plan -detailed-exitcode'
+            script {
+            def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
+            if (exitCode == 1) {
                 sh 'terraform apply --auto-approve'
             }
+            }
         }
+        }
+
 
 
     }
