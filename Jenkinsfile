@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
                 sh 'unzip -o awscliv2.zip'
-                sh 'echo <anil1116> | sudo -S ./aws/install'
+                sh 'echo anil1116 | sudo -S ./aws/install'
             }
         }
 
