@@ -55,6 +55,10 @@ pipeline {
 
 
         stage('Apply terraform infrastructure') {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
+                AWS_SECRET_ACCESS_KEY = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
+            }
             steps {
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
