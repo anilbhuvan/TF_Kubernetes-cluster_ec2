@@ -11,7 +11,6 @@ pipeline {
         stage('Install AWS CLI') {
         steps {
             sh 'whoami'
-            sh 'sudo mkdir /usr/local/aws-cli'
             sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
             sh 'unzip -o awscliv2.zip'
             sh 'sudo ./aws/install -i /usr/local/aws-cli -b /usr/local/bin'
