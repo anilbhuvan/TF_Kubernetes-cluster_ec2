@@ -66,7 +66,7 @@ pipeline {
             script {
             def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
             if (exitCode == 2) {
-                sh 'terraform destroy --auto-approve'
+                sh 'terraform apply --auto-approve'
             }
             }
         }
