@@ -74,9 +74,10 @@ pipeline {
 
         stage('Commit Updated Files to Git') {
             steps {
+                sh 'git checkout main' // Switch to the 'main' branch
                 sh 'git add .'
                 sh 'git commit -m "updated"'
-                sh 'git push origin'
+                sh 'git push origin HEAD:main' // Push changes to the 'main' branch
             }
         }
     }
