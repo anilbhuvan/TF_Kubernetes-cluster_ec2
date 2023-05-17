@@ -56,13 +56,13 @@ pipeline {
         steps {
             script {
             def bucketExists = sh(
-                script: 'aws s3api head-bucket --bucket my-terraform-state-bucket1156895 --region us-east-1',
+                script: 'aws s3api head-bucket --bucket my-terraform-state-bucket1156896 --region us-east-1',
                 returnStatus: true
             )
             if (bucketExists == 0) {
                 echo 'S3 bucket already exists'
             } else {
-                sh 'aws s3api create-bucket --bucket my-terraform-state-bucket1156895 --region us-east-1'
+                sh 'aws s3api create-bucket --bucket my-terraform-state-bucket1156896 --region us-east-1'
             }
             }
         }
@@ -72,7 +72,7 @@ pipeline {
         stage('Configure Terraform') {
             steps {
                 // sh 'terraform init'
-                sh 'terraform init -backend-config="bucket=my-terraform-state-bucket1156895" -backend-config="key=terraform.tfstate"'
+                sh 'terraform init -backend-config="bucket=my-terraform-state-bucket1156896" -backend-config="key=terraform.tfstate"'
                 sh 'terraform validate'
             }
         }
