@@ -72,14 +72,14 @@ pipeline {
         // }
         // }
 
-        stage('git commit and Credential Binding') {
+        stage('commit to git') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca', keyFileVariable: 'SSH_KEY_FILE', passphraseVariable: 'SSH_PASSPHRASE')]) {
                     sh 'git config --global credential.helper store' // Configure Git credential storage
                     sh 'git checkout main' // Switch to the 'main' branch
                     sh 'git add .'
                     sh 'git commit -m "updated"'
-                    sh 'git push origin HEAD:main' // Push changes to the 'main' branch
+                    sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no" git push origin HEAD:main' // Push changes to the 'main' branch with SSH credentials
                 }
             }
         }
