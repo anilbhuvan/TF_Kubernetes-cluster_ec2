@@ -49,26 +49,23 @@ pipeline {
         }
 
         stage('Create S3 Bucket') {
-            environment {
-                AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
-                AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
-            }
-            steps {
-                script {
-                sh 'aws configure'  // Configure AWS CLI with access key and secret key
-                script {
+        environment {
+                        AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+                        AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+                    }
+        steps {
+                    script {
                     def bucketExists = sh (
-                    script: 'aws s3api head-bucket --bucket my-terraform-state-bucket1156895 --region <region>',
-                    returnStatus: true
+                        script: 'aws s3api head-bucket --bucket my-terraform-state-bucket1156895 --region <region>',
+                        returnStatus: true
                     )
                     if (bucketExists == 0) {
-                    echo 'S3 bucket already exists'
+                        echo 'S3 bucket already exists'
                     } else {
-                    sh 'aws s3api create-bucket --bucket my-terraform-state-bucket1156895 --region <region>'
+                        sh 'aws s3api create-bucket --bucket my-terraform-state-bucket1156895 --region <region>'
+                    }
                     }
                 }
-                }
-            }
         }
 
         stage('Configure Terraform') {
