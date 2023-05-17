@@ -76,6 +76,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca', keyFileVariable: 'SSH_KEY_FILE', passphraseVariable: 'SSH_PASSPHRASE')]) {
                     sh 'git config --global credential.helper store' // Configure Git credential storage
+                    sh 'git stash'
                     sh 'git checkout main' // Switch to the 'main' branch
                     sh 'git add .'
                     sh 'git commit -m "updated"'
