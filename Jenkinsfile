@@ -51,39 +51,25 @@ pipeline {
 
         stage('Configure Terraform') {
             steps {
-                sh 'terraform init'
+                sh 'terraform init -backend-config="bucket=my-terraform-state-bucket1156895" -backend-config="key=terraform.tfstate"'
                 sh 'terraform validate'
             }
         }
 
 
-        // stage('Apply terraform infrastructure') {
-        // environment {
-        //     AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
-        //     AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
-        // }
-        // steps {
-        //     script {
-        //     def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
-        //     if (exitCode == 2) {
-        //         sh 'terraform apply --auto-approve'
-        //     }
-        //     }
-        // }
-        // }
-
-        stage('commit to git') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca', keyFileVariable: 'SSH_KEY_FILE', passphraseVariable: 'SSH_PASSPHRASE')]) {
-                    sh 'git config --global credential.helper store' // Configure Git credential storage
-                    sh 'git add .'
-                    sh 'git commit -m "Save changes before switching branches"'
-                    sh 'git checkout main' // Switch to the 'main' branch
-                    sh 'git add .'
-                    sh 'git commit -m "updated"'
-                    sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no" git push origin HEAD:main' // Push changes to the 'main' branch with SSH credentials
-                }
+        stage('Apply terraform infrastructure') {
+        environment {
+            AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+            AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+        }
+        steps {
+            script {
+            def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
+            if (exitCode == 2) {
+                sh 'terraform apply --auto-approve'
             }
+            }
+        }
         }
     }
 }
