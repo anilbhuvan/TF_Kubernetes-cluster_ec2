@@ -6,7 +6,12 @@ terraform {
     }
   }
 }
-
+terraform {
+  backend "s3" {
+    bucket = "my-terraform-state-bucket1156895"
+    key    = "terraform.tfstate"
+  }
+}
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
