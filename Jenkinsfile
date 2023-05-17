@@ -72,12 +72,15 @@ pipeline {
         // }
         // }
 
-        stage('Commit Updated Files to Git') {
+        stage('AWS Credential Binding') {
             steps {
-                sh 'git checkout main' // Switch to the 'main' branch
-                sh 'git add .'
-                sh 'git commit -m "updated"'
-                sh 'git push origin HEAD:main' // Push changes to the 'main' branch
+                withCredentials([usernamePassword(credentialsId: 'cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh 'git config --global credential.helper store' // Configure Git credential storage
+                    sh 'git checkout main' // Switch to the 'main' branch
+                    sh 'git add .'
+                    sh 'git commit -m "updated"'
+                    sh 'git push origin HEAD:main' // Push changes to the 'main' branch
+                }
             }
         }
     }
