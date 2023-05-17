@@ -49,6 +49,10 @@ pipeline {
         }
 
         stage('Create S3 Bucket') {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+                AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+            }
             steps {
                 script {
                 sh 'aws configure'  // Configure AWS CLI with access key and secret key
