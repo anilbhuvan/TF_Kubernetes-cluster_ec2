@@ -57,8 +57,8 @@ pipeline {
 
         stage('Apply terraform infrastructure') {
         environment {
-            AWS_ACCESS_KEY_ID = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
-            AWS_SECRET_ACCESS_KEY = credentials('728ffcdc-9ba7-4e5e-b44d-e004a276a798')
+            AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
+            AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
         }
         steps {
             script {
