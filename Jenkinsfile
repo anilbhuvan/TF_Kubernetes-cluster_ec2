@@ -51,7 +51,7 @@ pipeline {
 
         stage('Configure Terraform') {
             steps {
-                sh 'terraform init -backend-config="bucket=my-terraform-state-bucket1156895" -backend-config="key=terraform.tfstate"'
+                sh 'terraform init -backend-config=bucket=my-terraform-state-bucket1156895 -backend-config=key=terraform.tfstate"'
                 sh 'terraform validate'
             }
         }
