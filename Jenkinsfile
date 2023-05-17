@@ -72,7 +72,7 @@ pipeline {
         // }
         // }
 
-        stage('AWS Credential Binding') {
+        stage('git commit and Credential Binding') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh 'git config --global credential.helper store' // Configure Git credential storage
