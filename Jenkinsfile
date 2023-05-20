@@ -79,26 +79,15 @@ pipeline {
                     // Configure Git
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
-
+                    sh 'echo .terraform > .gitignore'
+                    
                     // Set credentials for HTTPS authentication
                     withCredentials([gitUsernamePassword(credentialsId: '8b76c2eb-4665-46a6-b9e2-79811543657a', gitToolName: 'Default')]) {
                         // Set Git remote URL using HTTPS
                         sh 'git remote set-url origin https://github.com/anilbhuvan/TF_Kubernetes-cluster_ec2.git'
 
-                        // Add files if they exist
-                        script {
-                            if (fileExists('./terraform.tfstate')) {
-                                sh 'git add ./terraform.tfstate'
-                            }
-                            
-                            if (fileExists('./k8s-key.pem')) {
-                                sh 'git add ./k8s-key.pem'
-                            }
-                            
-                            if (fileExists('./terraform.tfstate.backup')) {
-                                sh 'git add ./terraform.tfstate.backup'
-                            }
-                        }
+                        // Add files
+                        sh 'git add .'
 
                         // Commit the changes
                         sh 'git commit -m "Committing changes from Jenkins pipeline"'
