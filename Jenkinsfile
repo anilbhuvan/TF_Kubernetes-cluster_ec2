@@ -77,8 +77,8 @@ pipeline {
             steps {
                 script {
                     // Configure Git
-                    sh 'git config --global user.email "your-email@example.com"'
-                    sh 'git config --global user.name "Your Name"'
+                    sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
+                    sh 'git config --global user.name "anil"'
 
                     // Add all files
                     sh 'git add .'
@@ -87,7 +87,7 @@ pipeline {
                     sh 'git commit -m "Committing changes from Jenkins pipeline"'
 
                     // Push the changes
-                    sh 'git push origin master'
+                    sh 'git push origin main'
         }
     }
 }
