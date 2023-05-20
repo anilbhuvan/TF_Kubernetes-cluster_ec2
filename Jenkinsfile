@@ -89,7 +89,7 @@ pipeline {
                         sh 'git commit -m "Committing changes from Jenkins pipeline"'
 
                         // Push the changes
-                        sh 'git push origin master'
+                        sh 'git push origin main'
                     }
                 }
             }
