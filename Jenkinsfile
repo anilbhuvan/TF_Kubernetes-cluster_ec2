@@ -80,6 +80,7 @@ pipeline {
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
                     sh 'echo .terraform/* > .gitignore'
+                    sh 'echo ".terraform/providers/registry.terraform.io/**" >> .gitignore'
                     // Set credentials for HTTPS authentication
                     withCredentials([gitUsernamePassword(credentialsId: '8b76c2eb-4665-46a6-b9e2-79811543657a', gitToolName: 'Default')]) {
                         // Set Git remote URL using HTTPS

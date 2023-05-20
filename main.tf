@@ -12,25 +12,25 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create a vpc
-resource "aws_vpc" "k8s_vpc" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
+# # create a vpc
+# resource "aws_vpc" "k8s_vpc" {
+#   cidr_block           = "10.0.0.0/16"
+#   enable_dns_hostnames = true
 
-  tags = {
-    Name = "k8s_vpc"
-  }
-}
-
-# # create a subnet
-# resource "aws_subnet" "k8s_subnet" {
-#   vpc_id            = aws_vpc.k8s_vpc.id
-#   availability_zone = "us-east-1a"
-#   cidr_block        = "10.0.1.0/24"
 #   tags = {
-#     Name = "k8s-subnet"
+#     Name = "k8s_vpc"
 #   }
 # }
+
+# create a subnet
+resource "aws_subnet" "k8s_subnet" {
+  vpc_id            = aws_vpc.k8s_vpc.id
+  availability_zone = "us-east-1a"
+  cidr_block        = "10.0.1.0/24"
+  tags = {
+    Name = "k8s-subnet"
+  }
+}
 
 # # Create a Internet_Gateway
 # resource "aws_internet_gateway" "gw" {
