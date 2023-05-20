@@ -51,8 +51,8 @@ pipeline {
 
         stage('Configure Terraform') {
             steps {
-                // sh 'terraform init'
-                sh 'echo hello > file.txt'
+                sh 'terraform init'
+                // sh 'echo hello > file.txt'
             }
         }
 
@@ -66,8 +66,8 @@ pipeline {
             script {
             def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
             if (exitCode == 2) {
-                // sh 'terraform apply --auto-approve'
-                sh 'echo hello'
+                sh 'terraform apply --auto-approve'
+                // sh 'echo hello'
             }
             }
         }
