@@ -86,7 +86,7 @@ pipeline {
                         sh 'git remote set-url origin https://github.com/anilbhuvan/TF_Kubernetes-cluster_ec2.git'
 
                         // Add all files
-                        sh 'git add .'
+                        sh 'git add terraform.tfstate'
 
                         // Commit the changes
                         sh 'git commit -m "Committing changes from Jenkins pipeline"'
