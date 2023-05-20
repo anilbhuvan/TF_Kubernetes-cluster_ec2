@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "my-terraform-state-bucket1156896"
+    bucket = "myk8stfstatefile"
     key    = "terraform.tfstate"
     region = "us-east-1"  # Replace with your desired region
   }

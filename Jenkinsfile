@@ -48,31 +48,11 @@ pipeline {
             }  
         }
 
-        stage('Create S3 Bucket') {
-        environment {
-            AWS_ACCESS_KEY_ID = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
-            AWS_SECRET_ACCESS_KEY = credentials('79913a64-3684-4a21-9360-3e58f20a774f')
-        }
-        steps {
-            script {
-            def bucketExists = sh(
-                script: 'aws s3api head-bucket --bucket my-terraform-state-bucket1156896 --region us-east-1',
-                returnStatus: true
-            )
-            if (bucketExists == 0) {
-                echo 'S3 bucket already exists'
-            } else {
-                sh 'aws s3api create-bucket --bucket my-terraform-state-bucket1156896 --region us-east-1'
-            }
-            }
-        }
-        }
-
 
         stage('Configure Terraform') {
             steps {
                 // sh 'terraform init'
-                sh 'terraform init -backend-config="bucket=my-terraform-state-bucket1156896" -backend-config="key=terraform.tfstate"'
+                sh 'terraform init -backend-config="bucket=myk8stfstatefile" -backend-config="key=terraform.tfstate"'
                 sh 'terraform validate'
             }
         }
