@@ -51,7 +51,8 @@ pipeline {
 
         stage('Configure Terraform') {
             steps {
-                sh 'terraform init'
+                // sh 'terraform init'
+                sh 'echo hello > file.txt'
             }
         }
 
@@ -65,7 +66,8 @@ pipeline {
             script {
             def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
             if (exitCode == 2) {
-                sh 'terraform apply --auto-approve'
+                // sh 'terraform apply --auto-approve'
+                sh 'echo hello'
             }
             }
         }
@@ -77,6 +79,7 @@ pipeline {
                     // Configure Git
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
+                    sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
 
                     // Set up SSH agent and add private key
                     sshagent(['cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca']) {
