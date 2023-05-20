@@ -32,29 +32,29 @@ provider "aws" {
 #   }
 # }
 
-# Create a Internet_Gateway
-resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.k8s_vpc.id
-
-  tags = {
-    Name = "k8s-gw"
-  }
-}
-
-# # Create a Route_table
-# resource "aws_route_table" "rt" {
+# # Create a Internet_Gateway
+# resource "aws_internet_gateway" "gw" {
 #   vpc_id = aws_vpc.k8s_vpc.id
 
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     gateway_id = aws_internet_gateway.gw.id
-#   }
-
-#   route {
-#     ipv6_cidr_block = "::/0"
-#     gateway_id      = aws_internet_gateway.gw.id
+#   tags = {
+#     Name = "k8s-gw"
 #   }
 # }
+
+# Create a Route_table
+resource "aws_route_table" "rt" {
+  vpc_id = aws_vpc.k8s_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+  route {
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.gw.id
+  }
+}
 
 # # Associate subnet with route table
 # resource "aws_route_table_association" "a" {
