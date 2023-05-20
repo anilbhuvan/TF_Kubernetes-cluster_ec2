@@ -80,17 +80,20 @@ pipeline {
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
 
-                    // Add all files
-                    sh 'git add .'
+                    // Set up SSH agent and add private key
+                    sshagent(['cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca']) {
+                        // Add all files
+                        sh 'git add .'
 
-                    // Commit the changes
-                    sh 'git commit -m "Committing changes from Jenkins pipeline"'
+                        // Commit the changes
+                        sh 'git commit -m "Committing changes from Jenkins pipeline"'
 
-                    // Push the changes
-                    sh 'git push origin main'
+                        // Push the changes
+                        sh 'git push origin master'
+                    }
+                }
+            }
         }
-    }
-}
 
     }
 }
