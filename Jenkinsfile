@@ -72,5 +72,25 @@ pipeline {
             }
         }
         }
+
+        stage('Commit to Git') {
+            steps {
+                script {
+                    // Configure Git
+                    sh 'git config --global user.email "your-email@example.com"'
+                    sh 'git config --global user.name "Your Name"'
+
+                    // Add all files
+                    sh 'git add .'
+
+                    // Commit the changes
+                    sh 'git commit -m "Committing changes from Jenkins pipeline"'
+
+                    // Push the changes
+                    sh 'git push origin master'
+        }
+    }
+}
+
     }
 }
