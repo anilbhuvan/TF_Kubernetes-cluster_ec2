@@ -1,10 +1,7 @@
 terraform {
-  backend "s3" {
-    bucket = "myk8stfstatefile"
-    key    = "terraform.tfstate"
     region = "us-east-1"  # Replace with your desired region
   }
-}
+  
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
