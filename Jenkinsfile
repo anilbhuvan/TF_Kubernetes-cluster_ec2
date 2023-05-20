@@ -83,7 +83,7 @@ pipeline {
 
                     // Set up SSH agent and add private key
                     sshagent(['cb8fabc9-cfcc-4cd4-9724-ef21e5b6b6ca']) {
-                        sh 'git remote add origin git@github.com:anilbhuvan/TF_Kubernetes-cluster_ec2.git'
+                        sh 'git remote set-url origin https://github.com/anilbhuvan/TF_Kubernetes-cluster_ec2.git'
                         
                         // Add all files
                         sh 'git add .'
