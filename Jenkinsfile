@@ -79,7 +79,6 @@ pipeline {
                     // Configure Git
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
-                    sh 'echo .terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/linux_amd64/terraform-provider-aws_v4.67.0_x5 > .gitignore'
 
                     // Set credentials for HTTPS authentication
                     withCredentials([gitUsernamePassword(credentialsId: '8b76c2eb-4665-46a6-b9e2-79811543657a', gitToolName: 'Default')]) {
