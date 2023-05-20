@@ -22,24 +22,24 @@ provider "aws" {
 #   }
 # }
 
-# create a subnet
-resource "aws_subnet" "k8s_subnet" {
-  vpc_id            = aws_vpc.k8s_vpc.id
-  availability_zone = "us-east-1a"
-  cidr_block        = "10.0.1.0/24"
-  tags = {
-    Name = "k8s-subnet"
-  }
-}
-
-# # Create a Internet_Gateway
-# resource "aws_internet_gateway" "gw" {
-#   vpc_id = aws_vpc.k8s_vpc.id
-
+# # create a subnet
+# resource "aws_subnet" "k8s_subnet" {
+#   vpc_id            = aws_vpc.k8s_vpc.id
+#   availability_zone = "us-east-1a"
+#   cidr_block        = "10.0.1.0/24"
 #   tags = {
-#     Name = "k8s-gw"
+#     Name = "k8s-subnet"
 #   }
 # }
+
+# Create a Internet_Gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.k8s_vpc.id
+
+  tags = {
+    Name = "k8s-gw"
+  }
+}
 
 # # Create a Route_table
 # resource "aws_route_table" "rt" {
