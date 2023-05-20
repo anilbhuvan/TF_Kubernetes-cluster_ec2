@@ -79,7 +79,7 @@ pipeline {
                     // Configure Git
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
-                    sh 'git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch .terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/linux_amd64/terraform-provider-aws_v4.67.0_x5' --prune-empty --tag-name-filter cat -- --all'
+                    sh "git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch .terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/linux_amd64/terraform-provider-aws_v4.67.0_x5' --prune-empty --tag-name-filter cat -- --all"
                     sh 'echo .terraform/* > .gitignore'
                     sh 'echo ".terraform/providers/registry.terraform.io/**" >> .gitignore'
                     // Set credentials for HTTPS authentication
