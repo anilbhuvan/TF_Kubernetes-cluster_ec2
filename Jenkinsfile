@@ -51,10 +51,9 @@ pipeline {
 
         stage('Configure Terraform') {
             steps {
-                // sh 'terraform init'
-                // sh 'terraform init -backend-config="bucket=myk8stfstatefile" -backend-config="key=terraform.tfstate"'
-                // sh 'terraform validate'
-                sh 'echo hello'
+                sh 'terraform init'
+                sh 'terraform init -backend-config="bucket=myk8stfstatefile" -backend-config="key=terraform.tfstate"'
+                sh 'terraform validate'
             }
         }
 
@@ -68,7 +67,7 @@ pipeline {
             script {
             def exitCode = sh(script: 'terraform plan -detailed-exitcode', returnStatus: true)
             if (exitCode == 2) {
-                // sh 'terraform apply --auto-approve'
+                sh 'terraform apply --auto-approve'
             }
             }
         }
