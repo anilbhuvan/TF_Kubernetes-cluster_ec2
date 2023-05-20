@@ -78,7 +78,7 @@ pipeline {
                 script {
                     // Configure Git
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
-                    sh 'git config --global user.name "anil"'
+                    sh 'git config --global user.name "anilbhuvan"'
 
                     // Add all files
                     sh 'git add .'
