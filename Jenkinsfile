@@ -77,6 +77,7 @@ pipeline {
             steps {
                 script {
                     // Configure Git
+                    sh 'git init'
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
 
