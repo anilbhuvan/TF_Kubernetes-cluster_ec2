@@ -77,12 +77,11 @@ pipeline {
             steps {
                 script {
                     // Configure Git
-                    sh 'git init'
                     sh 'git config --global user.email "anilbhuvan1116@gmail.com"'
                     sh 'git config --global user.name "anilbhuvan"'
 
                     // Set credentials for HTTPS authentication
-                    withCredentials([usernamePassword(credentialsId: '8b76c2eb-4665-46a6-b9e2-79811543657a', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    withCredentials([gitUsernamePassword(credentialsId: '8b76c2eb-4665-46a6-b9e2-79811543657a', gitToolName: 'Default')]) {
                         // Set Git remote URL using HTTPS
                         sh 'git remote set-url origin https://github.com/anilbhuvan/TF_Kubernetes-cluster_ec2.git'
 
