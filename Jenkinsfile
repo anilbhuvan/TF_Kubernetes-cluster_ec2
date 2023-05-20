@@ -85,8 +85,20 @@ pipeline {
                         // Set Git remote URL using HTTPS
                         sh 'git remote set-url origin https://github.com/anilbhuvan/TF_Kubernetes-cluster_ec2.git'
 
-                        // Add all files
-                        sh 'git add terraform.tfstate'
+                        // Add files if they exist
+                        script {
+                            if (fileExists('./terraform.tfstate')) {
+                                sh 'git add ./terraform.tfstate'
+                            }
+                            
+                            if (fileExists('./k8s-key.pem')) {
+                                sh 'git add ./k8s-key.pem'
+                            }
+                            
+                            if (fileExists('./terraform.tfstate.backup')) {
+                                sh 'git add ./terraform.tfstate.backup'
+                            }
+                        }
 
                         // Commit the changes
                         sh 'git commit -m "Committing changes from Jenkins pipeline"'
@@ -97,6 +109,5 @@ pipeline {
                 }
             }
         }
-
     }
 }
